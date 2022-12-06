@@ -1234,7 +1234,55 @@
 
 		<cfset getActiveSheet().getRow(JavaCast("int", arguments.row - 1)).setHeightInPoints(JavaCast("int", arguments.height)) />
 	</cffunction>
-
+    
+    <cffunction name="isDouble" access="public" output="false" returntype="boolean"
+			hint="Is value an double">
+		<cfargument name="value" type="numeric" required="true" />
+        <cfset Local.isDouble = false />
+        <cfif FindNoCase(".",arguments.value)>
+		  <cfset Local.isDouble = true />
+        </cfif>
+		<cfreturn Local.isDouble />
+	</cffunction>
+    
+    <cffunction name="isInt" access="public" output="false" returntype="boolean"
+			hint="Is value an int">
+		<cfargument name="value" type="numeric" required="true" />
+        <cfset Local.isInt = false />
+        <cfif NOT isDouble(arguments.value)>
+		  <cfif arguments.value GT -2147483648 AND arguments.value LT 2147483647>
+            <cfset Local.isInt = true />
+          </cfif>
+        </cfif>
+		<cfreturn Local.isInt />
+	</cffunction>
+    
+    <cffunction name="isLong" access="public" output="false" returntype="boolean"
+			hint="Is value an long">
+		<cfargument name="value" type="numeric" required="true" />
+        <cfset Local.isLong = false />
+        <cfif NOT isDouble(arguments.value)>
+		  <cfif arguments.value GT -9223372036854775808 AND arguments.value LT 9223372036854775807>
+            <cfset Local.isLong = true />
+          </cfif>
+        </cfif>
+		<cfreturn Local.isLong />
+	</cffunction>
+    
+    <cffunction name="typeOfNumber" access="public" output="false" returntype="string"
+			hint="Get the type of number: double | long | int">
+		<cfargument name="value" type="numeric" required="true" />
+        <cfset Local.value = "long" />
+        <cfif isDouble(arguments.value)>
+		  <cfset Local.value = "double" />
+        </cfif>
+        <cfif CompareNoCase(Local.value,"long") EQ 0>
+		  <cfif isInt(arguments.value)>
+            <cfset Local.value = "int" />
+          </cfif>
+        </cfif>
+		<cfreturn Local.value />
+	</cffunction>
 
 	<!--- column functions --->
 	<cffunction name="autoSizeColumn" access="public" output="false" returntype="void"
@@ -1390,7 +1438,7 @@
 				<cfset Local.cell.setCellValue( JavaCast("string", Local.cellValue) ) />
               </cfif>
             <cfelseif IsNumeric(Local.cellValue)>
-              <cfset Local.cell.setCellValue( JavaCast("int", Local.cellValue) ) />
+			  <cfset Local.cell.setCellValue( JavaCast("double", Local.cellValue) ) />
               <cfif (IsBoolean(arguments.format) AND arguments.format) OR (IsArray(arguments.format) AND ArrayFindNoCase(arguments.format,"numeric")) OR (IsArray(arguments.format) AND ArrayFindNoCase(arguments.format,Local.newRowNum)) OR (IsStruct(arguments.format) AND StructKeyExists(arguments.format,Local.newRowNum))>
 				<cfset Local.cellFormat = getNumericValueFormat( Local.cellValue ) />
                 <cfif IsStruct(arguments.format)>
