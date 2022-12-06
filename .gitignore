@@ -1,0 +1,8 @@
+resources/**
+archive/**
+db/**
+BIN/**
+server.json
+web.config
+*.log
+*.xls
