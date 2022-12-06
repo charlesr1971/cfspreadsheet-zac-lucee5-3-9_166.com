@@ -8,7 +8,7 @@
 	for (Local.row = 1; Local.row <= arrayLen(files); Local.row++) {
 		name = listFirst( files[ Local.row ], "." );
 		if (not listfindNoCase(excludes, name)) {
-		 	testSuite.addAll( "test.functions."& name );
+		 	testSuite.addAll( "test.functions." & name );
 		}
 	}	
 
