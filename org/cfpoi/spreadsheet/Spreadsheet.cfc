@@ -1239,7 +1239,7 @@
 			hint="Is value an double">
 		<cfargument name="value" type="numeric" required="true" />
         <cfset Local.isDouble = false />
-        <cfif FindNoCase(".",arguments.value)>
+        <cfif arguments.value LTE -9223372036854775808 OR arguments.value GTE 9223372036854775807>
 		  <cfset Local.isDouble = true />
         </cfif>
 		<cfreturn Local.isDouble />
@@ -1269,7 +1269,7 @@
 		<cfreturn Local.isLong />
 	</cffunction>
     
-    <cffunction name="typeOfNumber" access="public" output="false" returntype="string"
+    <cffunction name="getJavaCastNumber" access="public" output="false" returntype="string"
 			hint="Get the type of number: double | long | int">
 		<cfargument name="value" type="numeric" required="true" />
         <cfset Local.value = "long" />
@@ -1417,28 +1417,11 @@
 			<cfset Local.dateMask = "" />
             <cfset Local.numericValue = 0 />
                                     
-            <cfif IsDate(Local.cellValue)>
-              <cfif (IsBoolean(arguments.format) AND arguments.format) OR (IsArray(arguments.format) AND ArrayFindNoCase(arguments.format,"date")) OR (IsArray(arguments.format) AND ArrayFindNoCase(arguments.format,Local.newRowNum)) OR (IsStruct(arguments.format) AND StructKeyExists(arguments.format,Local.newRowNum))>
-				<!--- Excel cell date mask formats only work on dates that have been converted to the 
-						epoch time in seconds --->
-				<cfset Local.date = CreateDate(Year(Local.cellValue),Month(Local.cellValue),Day(Local.cellValue)) />
-                <cfset Local.epochTime = Local.date.getTime()/1000 />
-				<cfset Local.cell.setCellValue( JavaCast("long", Local.date) ) />
-				<cfset Local.cellFormat = getDateTimeValueFormat( Local.cellValue ) />
-                <cfif IsStruct(arguments.format)>
-                  <cfif CompareNoCase(arguments.format[Local.newRowNum],"date") NEQ 0 AND Len(Trim(arguments.format[Local.newRowNum]))>
-					<cfset Local.cellFormat = arguments.format[Local.newRowNum] />
-                  </cfif>
-                </cfif>
-                <cfset Local.cell.setCellStyle( buildCellStyle({dataFormat=Local.cellFormat }) ) />
-                <cfset Local.dateMask = Local.cellFormat />
-				<cfset Local.isDateColumn = true />
-                <cfset Local.valueLengths = ListAppend(Local.valueLengths,Len(Local.dateMask)) />
-              <cfelse>
-				<cfset Local.cell.setCellValue( JavaCast("string", Local.cellValue) ) />
-              </cfif>
-            <cfelseif IsNumeric(Local.cellValue)>
-			  <cfset Local.cell.setCellValue( JavaCast("double", Local.cellValue) ) />
+            <!--- Its very important to add the numeric branch of the conditional first
+				because some dates equate to numbers, but numbers should
+				should not be accepted as dates, using this system --->
+            <cfif IsNumeric(Local.cellValue)>
+              <cfset Local.cell.setCellValue( JavaCast("double", Local.cellValue) ) />
               <cfif (IsBoolean(arguments.format) AND arguments.format) OR (IsArray(arguments.format) AND ArrayFindNoCase(arguments.format,"numeric")) OR (IsArray(arguments.format) AND ArrayFindNoCase(arguments.format,Local.newRowNum)) OR (IsStruct(arguments.format) AND StructKeyExists(arguments.format,Local.newRowNum))>
 				<cfset Local.cellFormat = getNumericValueFormat( Local.cellValue ) />
                 <cfif IsStruct(arguments.format)>
@@ -1456,6 +1439,26 @@
                   <cfset Local.dateMask = "" />
                   <cfset Local.valueLengths = ListAppend(Local.valueLengths,Len(Local.numericValue)) />
                 </cfif>
+              </cfif>
+            <cfelseif IsDate(Local.cellValue)>
+              <cfif (IsBoolean(arguments.format) AND arguments.format) OR (IsArray(arguments.format) AND ArrayFindNoCase(arguments.format,"date")) OR (IsArray(arguments.format) AND ArrayFindNoCase(arguments.format,Local.newRowNum)) OR (IsStruct(arguments.format) AND StructKeyExists(arguments.format,Local.newRowNum))>
+				<!--- Excel cell date mask formats only work on dates that have been converted to the 
+					epoch time in seconds --->
+				<cfset Local.date = CreateDate(Year(Local.cellValue),Month(Local.cellValue),Day(Local.cellValue)) />
+                <cfset Local.epochTime = Local.date.getTime()/1000 />
+				<cfset Local.cell.setCellValue( JavaCast("long", Local.date) ) />
+				<cfset Local.cellFormat = getDateTimeValueFormat( Local.cellValue ) />
+                <cfif IsStruct(arguments.format)>
+                  <cfif CompareNoCase(arguments.format[Local.newRowNum],"date") NEQ 0 AND Len(Trim(arguments.format[Local.newRowNum]))>
+					<cfset Local.cellFormat = arguments.format[Local.newRowNum] />
+                  </cfif>
+                </cfif>
+                <cfset Local.cell.setCellStyle( buildCellStyle({dataFormat=Local.cellFormat }) ) />
+                <cfset Local.dateMask = Local.cellFormat />
+				<cfset Local.isDateColumn = true />
+                <cfset Local.valueLengths = ListAppend(Local.valueLengths,Len(Local.dateMask)) />
+              <cfelse>
+				<cfset Local.cell.setCellValue( JavaCast("string", Local.cellValue) ) />
               </cfif>
             <cfelseif ListFindNoCase("true,false",Local.cellValue)>
 			  <cfif (IsBoolean(arguments.format) AND arguments.format) OR (IsArray(arguments.format) AND ArrayFindNoCase(arguments.format,"boolean")) OR (IsArray(arguments.format) AND ArrayFindNoCase(arguments.format,Local.newRowNum)) OR (IsStruct(arguments.format) AND StructKeyExists(arguments.format,Local.newRowNum))>

@@ -72,7 +72,7 @@
   SpreadsheetAddRow(spreadsheetData,"03,ENGL,230,Poetry 1",8,1); 
   // SpreadsheetAddColumn(spreadsheet=spreadsheetData,data="Basic,Intermediate,Advanced,Basic,Intermediate,Advanced,true,1999,01/01/2022",startRow=3,startColumn=2,insert=true,delimiter=",",format=[7,8,9]); 
   // SpreadsheetAddColumn(spreadsheet=spreadsheetData,data="Basic,Intermediate,Advanced,Basic,Intermediate,Advanced,true,1999,01/01/2022",insert=true,delimiter=",",format=[7,8,9]);
-  SpreadsheetAddColumn(spreadsheet=spreadsheetData,data="Basic,Intermediate,Advanced,Basic,Intermediate,Advanced,true,01/01/2022,123456789012345,Basic",insert=true,delimiter=",",format={7: 'boolean', 8: 'mmm d-yy', 9: '0.0000'});
+  SpreadsheetAddColumn(spreadsheet=spreadsheetData,data="Basic,Intermediate,Advanced,Basic,Intermediate,Advanced,true,01/01/2022,1234567890123456789012345678901234567890,Basic",insert=true,delimiter=",",format={7: 'boolean', 8: 'mmm d-yy', 9: '0.0000'});
 </cfscript> 
 
 <cfset num = 1234567890123456789012345678901234567890>
