@@ -43,6 +43,14 @@
   //Populate each object with a query. ---> 
   SpreadsheetAddRows(theSheet,courses); 
   SpreadsheetAddRows(theSecondSheet,centers); 
+  
+  coursesJSON = SerializeJson(courses);
+  
+  WriteDump(var=coursesJSON, label="json");
+  
+  coursesQuery = DeserializeJSON(coursesJSON, false);
+  
+  WriteDump(var=coursesQuery, label="query");
 </cfscript> 
   
 <!--- Write the two sheets to a single file ---> 
