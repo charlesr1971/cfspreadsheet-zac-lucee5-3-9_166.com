@@ -1,6 +1,6 @@
 <cfcomponent extends="testbox.system.compat.framework.TestCase">
 
-	<cffunction name="testDefaultRows" access="public" returnType="void">
+	<cffunction name="testDefaultRow" access="public" returnType="void">
 		<cfset var Local = {}>
 
 		<!--- add a data object --->
@@ -104,20 +104,26 @@
 		<!--- convert JSON to query ---> 
         <cfset Local.courses = DeserializeJSON(Local.coursesJSON, false) />
         <cfset Local.sheet = SpreadsheetNew() />
-        <!--- add query data to spreadsheet ---> 
-        <cfset SpreadsheetAddRows(Local.sheet, Local.courses) />
 		
-		<!--- loop through query rows --->		
-        <cfloop query="Local.courses">
+		<!--- loop through query rows --->
+        <cfset Local.data = "" />		
+        <cfloop query="Local.courses" startrow="1" endrow="1">
 		  <cfset Local.columns = Local.courses.columnList />
           <cfset Local.counter = 1 />
           <!--- loop through query columns --->
           <cfloop list="#Local.columns#" index="Local.column">
 			<!--- access query cell data via object array notation --->
 			<cfset Local.columnData = Local.courses[Local.column][Local.courses.currentRow] />
-            <cfset checkRowValues(Local.sheet, Local.columnData, Local.courses.currentRow, Local.counter) />
+            <cfset Local.data = ListAppend(Local.data, Local.columnData) />
 			<cfset Local.counter = Local.counter + 1 />
           </cfloop>
+        </cfloop>
+        <!--- add data to spreadsheet ---> 
+        <cfset SpreadsheetAddRow(Local.sheet, Local.data) />
+        <cfset Local.counter = 1 />
+        <cfloop list="#Local.data#" index="Local.columnData">
+		  <cfset checkRowValues(Local.sheet, Local.columnData, 1, Local.counter) />
+          <cfset Local.counter = Local.counter + 1 />
         </cfloop>
 	</cffunction>		
 
@@ -127,7 +133,7 @@
 		<cfargument name="startRow" type="numeric" default="1" />
 		<cfargument name="startCol" type="numeric" default="1" />
 		<cfargument name="delim" 	type="string" default="," hint="data delimiter" />
-
+       
 		<cfset Local.rowOffset = arguments.startRow - 1 />
 		<cfset Local.endRow = arguments.startRow + listLen(arguments.data, arguments.delim) - 1 />
         
