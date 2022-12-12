@@ -2557,11 +2557,11 @@
 		<cfargument name="overwrite" type="boolean" required="false" default="false" />
 		<cfargument name="password" type="string" required="false" />
 
-		<cfif not arguments.overwrite and FileExists(arguments.filepath)>
+		<!---<cfif not arguments.overwrite and FileExists(arguments.filepath)>
 			<cfthrow type="org.cfpoi.spreadsheet.Spreadsheet"
 						message="File Exists"
 						detail="The file attempting to be written to already exists. Either use the update action or pass an overwrite argument of true to this function." />
-		</cfif>
+		</cfif>--->
 
 		<cfscript>
 			// writeProtectWorkbook takes both a user name and a password, but

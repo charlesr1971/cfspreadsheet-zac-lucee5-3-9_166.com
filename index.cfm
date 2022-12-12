@@ -101,8 +101,4 @@
 <cf_spreadsheet action="write" filename="#theDir#dataFromCSV.xls" name="CSVData" 
     format="csv" sheetname="courses" overwrite=true>
 
-
-
-
-
 </cfoutput>
