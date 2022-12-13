@@ -1,5 +1,7 @@
 <cfscript>
+
   component {
+
     this.name = 'cfspreadsheetZacLucee539166';
     this.sessionManagement = true;
 	
@@ -19,5 +21,7 @@
 	this.javasettings.bundle = [
 		expandpath(".\jars")
 	];
+
  }
+ 
 </cfscript>
