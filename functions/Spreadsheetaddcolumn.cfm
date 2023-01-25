@@ -1,4 +1,5 @@
 <!--- Compatibility note: ACF does not yet support a "delimiter" argument --->
+<!--- Compatibility note: ACF does not yet support a "delimiter" argument --->
 <cffunction name="SpreadsheetAddColumn" returntype="void" output="false">
 	<cfargument name="spreadsheet" type="org.cfpoi.spreadsheet.Spreadsheet" required="true" />
 	<cfargument name="data" type="string" required="true" hint="Delimited list of values" />
