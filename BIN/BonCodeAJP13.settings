@@ -1,0 +1,9 @@
+<Settings>
+<Server>127.0.0.6</Server>
+<Port>8014</Port>
+<EnableRemoteAdmin>False</EnableRemoteAdmin>
+<EnableHeaderDataSupport>False</EnableHeaderDataSupport>
+<ForceSecureSession>False</ForceSecureSession>
+<AllowEmptyHeaders>False</AllowEmptyHeaders>
+<ResolveRemoteAddrFrom>HTTP_X_FORWARDED_FOR</ResolveRemoteAddrFrom>
+</Settings>

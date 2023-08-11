@@ -1,0 +1,3 @@
+%windir%\system32\inetsrv\appcmd set config "Default Web Site" /section:handlers /-[name='BonCode-Tomcat-CFM-Handler',path='*.cfm',verb='*',type='BonCodeIIS.BonCodeCallHandler',preCondition='integratedMode']
+%windir%\system32\inetsrv\appcmd set config "Default Web Site" /section:handlers /-[name='BonCode-Tomcat-CFC-Handler',path='*.cfc',verb='*',type='BonCodeIIS.BonCodeCallHandler',preCondition='integratedMode']
+%windir%\system32\inetsrv\appcmd set config "Default Web Site" /section:defaultDocument /-files.[value='index.cfm']

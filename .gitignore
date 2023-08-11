@@ -1,10 +1,10 @@
 resources/**
 archive/**
-db/**
-BIN/**
-testbox/**
-box.json
-server.json
-web.config
-*.log
-*.xls
+# db/**
+# BIN/**
+# testbox/**
+# box.json
+# server.json
+# web.config
+# *.log
+# *.xls

@@ -1,0 +1,19 @@
+{
+    "name":"cfspreadsheetZacLucee539166",
+    "web":{
+        "http":{
+            "port":"8080"
+        },
+        "rewrites":{
+            "enable":"true"
+        },
+        "ajp":{
+            "enable":"true",
+            "port":"8014"
+        },
+        "host":"cfspreadsheet-zac-lucee5-3-9_166.local"
+    },
+    "app":{
+        "cfengine":"lucee@5.3.9+166"
+    }
+}

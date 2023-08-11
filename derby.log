@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Thu Dec 01 18:28:56 GMT 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0184-cef2-e864-000000c32c08 
+on database directory C:\domains\cfspreadsheet-zac-lucee5-3-9_166.com\wwwroot\db\cfdocexamples with class loader derby [53] 
+Loaded from c:\Users\cdesi\.CommandBox\server\FF98D9E0BAACD295A1A469616ACBE222-cfspreadsheetZacLucee539166\lucee-5.3.9.166\WEB-INF\lucee-server\bundles\derby.jar
+java.vendor=Eclipse Adoptium
+java.runtime.version=11.0.15+10
+user.dir=C:\domains\cfspreadsheet-zac-lucee5-3-9_166.com\wwwroot
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
